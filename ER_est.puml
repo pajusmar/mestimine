@@ -1,0 +1,68 @@
+@startuml
+skinparam nodesep 50
+skinparam ranksep 110
+skinparam padding 2
+skinparam sameClassWidth true
+'skinparam minClassWidth 100
+skinparam linetype ortho
+left to right direction
+hide circle
+hide empty members
+
+
+entity REEGEL {
+    marc_vali
+    alamvali
+    kommentaar
+}
+
+entity VASTUOLU {
+    paar
+    reegel
+    info
+}
+
+entity KIRJE {
+    kirje_nr
+    bkood2
+    bkood3
+    keel
+    viimane_uuendus
+    sisu
+}
+
+entity PAAR {
+    aluskirje
+    liituv_kirje
+    sarnasus
+    ylekate
+    kaugus
+}
+
+
+entity KASUTAJA {
+    kasutajanimi
+}
+
+entity TEGEVUS {
+    paar
+    kasutaja
+    tegevuse_tyyp
+    toimumisaeg
+    kommentaar
+}
+
+entity TEGEVUSETYYP {
+    nimi
+}
+
+
+TEGEVUSETYYP ||--o{ TEGEVUS : kirjeldab
+KASUTAJA ||--o{ TEGEVUS : sooritab
+TEGEVUS }o--|| PAAR : tehakse
+KIRJE ||--o{ PAAR : sisaldab
+KIRJE ||-u-o{ PAAR : sisaldab
+VASTUOLU }o-|| PAAR : tekitab
+VASTUOLU }o--|| REEGEL : rikub
+
+@enduml

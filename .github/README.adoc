@@ -1,0 +1,15 @@
+= Bibliokirjete mestimine
+
+== Eestikeelne sissejuhatus
+
+Siin hoidlas olev dokumentatsioon ja kood on valminud aine Andmebaasid (LTAT.03.004) raames.
+
+Projekti ülevaade PDF kujul on leitav link:../docs/README.pdf[README.pdf] failist.
+
+Kirjutatud SQL koodi leiab failist link:../mestimine.sql[mestimine.sql]
+
+== In english
+
+Files in this repository are part of a personal project fleshed out during the spring semester in a course Databases LTAT.03.004. The project is about duplicate detection and bibliographic record consolidation.
+
+Sadly, all files are in Estonian, as this was a (soft) requirement. Feel free to browse anyway!

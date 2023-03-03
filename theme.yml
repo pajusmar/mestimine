@@ -1,0 +1,6 @@
+# default theme at https://github.com/asciidoctor/asciidoctor-pdf/blob/master/data/themes/default-theme.yml
+extends: default
+base:
+  font_size: 12
+code:
+  font_size: 9

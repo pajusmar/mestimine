@@ -1,0 +1,13 @@
+= Bibkirjete mestimise andmebaas
+Martin Pajuste
+Diagrammid
+:figure-caption: Joonis
+:pdf-theme: theme.yml
+
+== Olem-seose diagramm
+
+plantuml::ER_est.puml[format=png,title="Olem-seose diagramm"]
+
+== Relatsioonilisele kujule teisendatud mudel
+
+plantuml::ER_est_rel.puml[format=png,title="Relatsioonilisele kujule teisendatud mudel"]

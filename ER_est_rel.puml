@@ -1,0 +1,103 @@
+@startuml
+!define table(x) class x << (T,#FFAAAA) >>
+!define view(x) class x << (V,#FFAAAA) >>
+!define ent(x) class x << (E,#FFAAAA) >>
+' <back:#d8a81b>x</back> nii saab teksti tausta värvida
+!define primary_key(x) <b><color:#b8861b><&key></color> x </b>
+!define foreign_key(x) <color:#aaaaaa><&key></color> x
+!define column(x) <color:#dedede><&media-record></color> x
+!define column2(x,y) <color:#dedede><&media-record></color> x : y
+
+'skinparam dpi 180
+'skinparam nodesep 50
+skinparam ranksep 100
+'skinparam padding 2
+skinparam sameClassWidth true
+left to right direction
+' peidab defineeritud table, view, ent märgise
+hide circle
+hide empty members
+'hide methods
+
+'avoid problems with angled crows feet
+'skinparam linetype polyline
+'skinparam linetype ortho
+'skinparam classFontColor automatic
+'skinparam classHeaderBackgroundColor #444
+
+table(Kirje) {
+    primary_key(kirje_nr) : integer 
+    ---
+    {field} column2(bkood2,char(1))
+    {field} column2(bkood3,char(1))
+    {field} column(keel) : char(3)
+    column(viimane_uuendus) : date
+    column(sisu) : jsonb
+}
+
+entity Paar {
+    primary_key(paar_id) : integer 
+    foreign_key(aluskirje) : integer
+    foreign_key(liituv_kirje) : integer
+    ---
+    column(sarnasus) : float
+    column(ylekate) : float
+    column(kaugus) : integer
+}
+
+entity Vastuolu {
+    primary_key(vastuolu_id) : integer 
+    foreign_key(reegel_id) : smallint
+    foreign_key(paar_id) : integer
+    ---
+    column(info) : jsonb
+}
+
+/'
+note bottom of Vastuolu
+  JSON on kasutusel põhjusel, et reeglite
+  lisamisel ei peaks andmebaasi muutma.
+  Lisatava info täpne struktuur ei ole fikseeritud.
+  NB! Sisu saab ka indekseerida ja otsida.
+end note
+'/
+
+entity Reegel {
+    primary_key(reegel_id) : smallint
+    ---
+    {field} column(marc_vali) : varchar(16)
+    {field} column(alamvali) : char(1)
+    column(kommentaar) : text
+}
+
+entity Tegevus {
+    primary_key(tegevuse_id) : integer 
+    foreign_key(paar_id) : integer
+    foreign_key(tegevusetyyp_id) : smallint
+    foreign_key(kasutaja_id) : integer
+    ---
+    column(toimumisaeg) : timestamptz
+    column(kommentaar) : text
+}
+
+entity Kasutaja {
+    primary_key(kasutaja_id) : integer 
+    ---
+    {field} column(kasutajanimi) : varchar(255)
+}
+
+entity TegevuseTyyp {
+    primary_key(tegevusetyyp_id) : smallint 
+    ---
+    {field} column(nimi) : varchar(64)
+}
+
+Tegevus::tegevusetyyp_id --> TegevuseTyyp::tegevusetyyp_id
+Tegevus::kasutaja_id --> Kasutaja::kasutaja_id
+Tegevus::paar_id --> Paar::paar_id
+Kirje::kirje_nr <-u- Paar::aluskirje
+Kirje::kirje_nr <-- Paar::liituv_kirje
+Vastuolu::reegel_id --> Reegel::reegel_id
+Vastuolu::paar_id --> Paar::paar_id
+
+@enduml
